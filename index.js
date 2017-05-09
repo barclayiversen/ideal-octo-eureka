@@ -6,13 +6,18 @@ const program = require('commander');
 const csv = require('csv-parser');
 const fs = require('fs');
 //method 2
-let questionsArray;
+let questionsArray = [];
 
 let parseQuestions = (callback) => {
+  //I think this is passing back each question as it's own object, not as an array of objects
+
   fs.createReadStream('questions.csv')
     .pipe(csv())
     .on('data', function(data) {
-      callback(data);
+      // console.log(data.question_id)
+      questionsArray.push(data);
+      console.log('something distinct',questionsArray);
+      // callback(questionsArray);
     })
 };
 
@@ -22,9 +27,12 @@ let getQuestions = (req) => {
   if ((typeof req === 'number') && Math.floor(req) === req) {
     console.log('user passed %s', req);
     parseQuestions(function(res) {
-      questionsArray = res;
+      // questionsArray = res;
+      console.log(typeof res);
+      // console.log('one questions',questionsArray)
       for (let i = 0; i < req; i++) {
-        console.log('the array of question ids')
+        // console.log(i, req)
+        // console.log('the array of question ids');
       }
 
     })
