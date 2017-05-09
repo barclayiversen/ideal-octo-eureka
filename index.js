@@ -3,6 +3,42 @@
 
 const program = require('commander');
 
+  //method 2
+  let getQuestions = (req) => {
+    req = parseInt(req, 10);
+    console.log(typeof req);
+    if ((typeof req === 'number') && Math.floor(req) === req) {
+      console.log('user passed %s', req);
+    } else {
+      console.log('Please provide a valid number, no floats.')
+    }
+  }
+
+  program
+    .version('0.0.1')
+    .command('create-test <int>')
+    .description('Create a test with the provided number of questions')
+    .option('')
+    .action(getQuestions);
+  program.parse(process.argv); // notice that we have to parse in a new statement.
+
+
+
+  //Example:
+// $ cli-app command requiredValue -o
+
+
+//############################################################
+// method 3
+// program
+// .version('0.0.1')
+// .command('command <req> [optional]','command description')
+// .command('command2','command2 description')
+// .command('command3','command3 description')
+// .parse(process.argv);
+
+//##################################
+
 //method 1
 // program
 //   .version('0.0.1')
@@ -15,32 +51,3 @@ const program = require('commander');
   //Examples:
   // $ cli-app -om -I hello
   // $ cli-app --option -i optionalValue -I requiredValue
-
-
-  //method 2
-  program
-    .version('0.0.1')
-    .command(' <req> [optional]')
-    .description('command description')
-    .option('-o, --option','we can still have add l options')
-    .action(function(req,optional){
-      console.log('.action() allows us to implement the command');
-      console.log('User passed %s', req);
-      if (optional) {
-        optional.forEach(function(opt){
-          console.log("User passed optional arguments: %s", opt);
-        });
-      }
-    });
-  program.parse(process.argv); // notice that we have to parse in a new statement.
-
-  //Example:
-// $ cli-app command requiredValue -o
-
-// method 3
-// program
-// .version('0.0.1')
-// .command('command <req> [optional]','command description')
-// .command('command2','command2 description')
-// .command('command3','command3 description')
-// .parse(process.argv);
